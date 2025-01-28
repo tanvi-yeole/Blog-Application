@@ -1,0 +1,159 @@
+import React from "react";
+import { TextField, Button, Box, Typography, Container, Grid } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+const RegisterForm = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add form submission logic here
+    console.log("Form submitted");
+  };
+
+  return (
+    <Container maxWidth="sm" style={{ marginTop: "2rem" }}>
+      <Box
+        sx={{
+          boxShadow: 4,
+          padding: 4,
+          borderRadius: 3,
+          backgroundColor: "linear-gradient(to bottom, #ffffff, #f0f4f8)",
+          transition: "transform 0.3s ease",
+          '&:hover': {
+            transform: "scale(1.02)",
+            boxShadow: 8,
+          },
+        }}
+      >
+        <Box display="flex" justifyContent="center" alignItems="center" mb={2}>
+          <AccountCircleIcon style={{ fontSize: 50, color: "#007bff" }} />
+        </Box>
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          sx={{
+            fontWeight: "bold",
+            color: "#2c3e50",
+            marginBottom: 3,
+          }}
+        >
+          Create an Account
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Full Name"
+                variant="outlined"
+                margin="normal"
+                required
+                sx={{
+                  backgroundColor: "#fff",
+                  borderRadius: 1,
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: "#ccc",
+                    },
+                    '&:hover fieldset': {
+                      borderColor: "#007bff",
+                    },
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Email"
+                type="email"
+                variant="outlined"
+                margin="normal"
+                required
+                sx={{
+                  backgroundColor: "#fff",
+                  borderRadius: 1,
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: "#ccc",
+                    },
+                    '&:hover fieldset': {
+                      borderColor: "#007bff",
+                    },
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Password"
+                type="password"
+                variant="outlined"
+                margin="normal"
+                required
+                sx={{
+                  backgroundColor: "#fff",
+                  borderRadius: 1,
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: "#ccc",
+                    },
+                    '&:hover fieldset': {
+                      borderColor: "#007bff",
+                    },
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Confirm Password"
+                type="password"
+                variant="outlined"
+                margin="normal"
+                required
+                sx={{
+                  backgroundColor: "#fff",
+                  borderRadius: 1,
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: "#ccc",
+                    },
+                    '&:hover fieldset': {
+                      borderColor: "#007bff",
+                    },
+                  },
+                }}
+              />
+            </Grid>
+          </Grid>
+          <a href="/login">Login Here</a>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{
+              mt: 3,
+              padding: 1.5,
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+              borderRadius: 2,
+              textTransform: "none",
+              backgroundColor: "#007bff",
+              '&:hover': {
+                backgroundColor: "#0056b3",
+              },
+            }}
+          >
+            Register
+          </Button>
+        </form>
+      </Box>
+    </Container>
+  );
+};
+
+export default RegisterForm;
