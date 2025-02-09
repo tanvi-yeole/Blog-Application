@@ -80,3 +80,9 @@ export const loginUser = async (request, response) => {
     })
   }
 };
+
+export const Logout = async (request, response) => {
+  const token = request.body.token;
+  await Token.deleteOne({token:token});
+  response.status(200).json({msg:"Logout successfully"});
+}

@@ -18,6 +18,9 @@ const LoginForm = () => {
         password
       });
       console.log('login successful', response.data);
+
+      sessionStorage.setItem('accessToken', response.data.accessToken);
+      sessionStorage.setItem('refreshToken', response.data.refreshToken);
       navigate('/');
     }catch(err){
       setError(err.response?.data?.msg || 'Login failed')

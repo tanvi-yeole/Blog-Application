@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -18,49 +18,27 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material/";
 import { Link } from "react-router-dom";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-
 function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [isUserAuthenticated, setUserAuthenticated] = React.useState(false);
+  const Token = sessionStorage.getItem("accessToken");
+  useEffect(() => {
+    if (Token) {
+      setUserAuthenticated(true);
+    }
+  }, [Token]);
+
+  const Logout = () => {
+    try {
+      sessionStorage.removeItem("accessToken");
+      sessionStorage.removeItem("refreshToken");
+      setUserAuthenticated(false);
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -137,19 +115,28 @@ function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
             style={{ color: "black" }}
-                     
-                     >
-            
+          >
             📝 Blogger
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Button
-            color="primary"
-            style={{ backgroundColor: "#0b0b0b", color: "#ffffff" }}
-          >
-            <a href="/login">Get Started</a>
-          </Button>
+          {isUserAuthenticated && (
+            <Button
+              color="primary"
+              style={{ backgroundColor: "#0b0b0b", color: "#ffffff" }}
+              onClick = {Logout}
+            >
+              <a href="/login">LogOut</a>
+            </Button>
+          )}
+          {!isUserAuthenticated && (
+            <Button
+              color="primary"
+              style={{ backgroundColor: "#0b0b0b", color: "#ffffff" }}
+            >
+              <a href="/login">Get Started</a>
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
