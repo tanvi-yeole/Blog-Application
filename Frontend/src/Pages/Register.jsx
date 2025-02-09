@@ -1,12 +1,47 @@
-import React from "react";
+import React,{useState} from "react";
 import { TextField, Button, Box, Typography, Container, Grid } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
-  const handleSubmit = (e) => {
+  const[username,setUsername] = useState('');
+  const[email,setEmail] = useState('');
+  const[password,setPassword] = useState('');
+  const[confirmPassword, setConfirmPassword] = useState('');
+  const[error,setError] = useState('');
+  const navigate = useNavigate();
+  const handleSubmit =async (e) => {
     e.preventDefault();
+    if(password !== confirmPassword){
+      setError('Passwords do not match');
+      return;
+    }
+    try{
+      const response = await axios.post('http://localhost:4000/signup',{
+        name:username,
+        email,
+        password,
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      });
+      console.log("Form submitted", response.data);
+      if(response.status==200){
+        navigate('/login');
+      }else{
+        setError('Registration Failed')
+      }
+      
+
+    }catch(err){
+      console.error('Registration error', err.response?.data);
+      setError(err.response?.data?.msg || 'Registration Failed')
+    }
     // Add form submission logic here
-    console.log("Form submitted");
+   
   };
 
   return (
@@ -48,6 +83,8 @@ const RegisterForm = () => {
                 variant="outlined"
                 margin="normal"
                 required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
@@ -70,6 +107,8 @@ const RegisterForm = () => {
                 variant="outlined"
                 margin="normal"
                 required
+                value={email}
+                onChange={(e)=> setEmail(e.target.value)}
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
@@ -92,6 +131,9 @@ const RegisterForm = () => {
                 variant="outlined"
                 margin="normal"
                 required
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)
+                }
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
@@ -114,6 +156,8 @@ const RegisterForm = () => {
                 variant="outlined"
                 margin="normal"
                 required
+                value={confirmPassword} 
+                onChange={(e)=>setConfirmPassword(e.target.value)}
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
@@ -130,6 +174,7 @@ const RegisterForm = () => {
             </Grid>
           </Grid>
           <a href="/login">Login Here</a>
+          {error && <Typography color='error'>{error}</Typography>}
           <Button
             type="submit"
             fullWidth

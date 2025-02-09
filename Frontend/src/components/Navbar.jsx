@@ -16,6 +16,7 @@ import Menu from "@mui/material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material/";
+import { Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -136,7 +137,9 @@ function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
             style={{ color: "black" }}
-          >
+                     
+                     >
+            
             📝 Blogger
           </Typography>
 

@@ -1,12 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 import { TextField, Button, Box, Typography, Container, Grid } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const handleSubmit = (e) => {
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const [error,setError] = useState('');
+  const navigate = useNavigate(); 
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Add form submission logic here
-    console.log("Login form submitted");
+    try{
+      const response =await axios.post('http://localhost:4000/login',{
+        email,
+        password
+      });
+      console.log('login successful', response.data);
+      navigate('/');
+    }catch(err){
+      setError(err.response?.data?.msg || 'Login failed')
+    }
   };
 
   return (
@@ -49,6 +64,9 @@ const LoginForm = () => {
                 variant="outlined"
                 margin="normal"
                 required
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
+                
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
@@ -71,6 +89,8 @@ const LoginForm = () => {
                 variant="outlined"
                 margin="normal"
                 required
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
@@ -87,6 +107,7 @@ const LoginForm = () => {
             </Grid>
           </Grid>
           <a href="/register">Create an account</a>
+          {error && <Typography color='error'>{error}</Typography>}
           <Button
             type="submit"
             fullWidth

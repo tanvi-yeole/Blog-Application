@@ -8,17 +8,9 @@ dotenv.config()
 
 export const signupUser = async (request, response) => {
   try {
-    const { name, username, email, password } = request.body;
+    const { name, email, password } = request.body;
 
-    const checkUsername = await User.findOne({ username });
     const checkMail = await User.findOne({ email });
-
-    if (checkUsername) {
-      return response.status(409).json({
-        status: 409,
-        message: "Username already exist",
-      });
-    }
 
     if (checkMail) {
       return response.status(409).json({
@@ -31,7 +23,6 @@ export const signupUser = async (request, response) => {
 
     const newUser = new User({
       name,
-      username,
       email,
       password: hashPass,
     });
@@ -46,7 +37,7 @@ export const signupUser = async (request, response) => {
   } catch (error) {
     return response.status(500).json({
       status: 500,
-      error: error,
+      error: error.message,
       msg: "Something went wrong",
     });
   }
