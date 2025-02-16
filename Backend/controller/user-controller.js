@@ -2,9 +2,9 @@ import User from "../model/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Token from "../model/token.js";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
 export const signupUser = async (request, response) => {
   try {
@@ -50,39 +50,55 @@ export const loginUser = async (request, response) => {
   }
   try {
     let match = await bcrypt.compare(request.body.password, user.password);
-    if (match) {
-      const accessToken = jwt.sign(
-        user.toJSON(),
-        process.env.ACCESS_SECRET_KEY,
-        { expiresIn: "15m" }
-      );
 
-      const refreshToken = jwt.sign(
-        user.toJSON(),
-        process.env.REFRESH_SECRET_KEY
-      );
-
-      const newToken = new Token({ token: refreshToken });
-      await newToken.save();
-
-      response.status(200).json({
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-        name: user.name,
-        username: user.username,
+    if (!match) {
+      return res.status(400).json({
+        status: 400,
+        message: "Invalid credentials",
       });
-    } else {
-      return response.status(400).json({ msg: "password does not match" });
     }
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+      process.env.JWT_SECRET
+    );
+    response.cookie("token", token);
+    response.status(200).json({
+      accessToken: token,
+      name: user.name,
+      username: user.username,
+    });
   } catch (error) {
     return response.json({
-      error: error.message
-    })
+      error: error.message,
+    });
   }
 };
 
-export const Logout = async (request, response) => {
-  const token = request.body.token;
-  await Token.deleteOne({token:token});
-  response.status(200).json({msg:"Logout successfully"});
-}
+export const Logout = async (req, res) => {
+  const token = await req.cookies.token;
+  try {
+    if (!token) {
+      return res.status(401).json({
+        status: 401,
+        message: "User needs to be logged in first!",
+      });
+    }
+    res.cookie("token", "").status(200).json({
+      status: 200,
+      message: "User Logout Success!",
+    });
+  } catch (error) {
+    res
+      .status(400)
+      .json({
+        message: "Logout Failed",
+        error: error.message,
+      })
+      .end();
+  }
+};

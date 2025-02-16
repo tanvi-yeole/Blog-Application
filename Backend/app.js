@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import router from "./routes/route.js";
 import cors from "cors";
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 const app = express();
@@ -17,7 +18,10 @@ app.use(cors({
 }));
 app.options("*", cors());
 
+app.use(cookieParser());
 app.use("/", router);
+app.use('/uploads', express.static('uploads'));
+
 mongoose
   .connect(process.env.URL)
   .then(() => {

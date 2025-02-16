@@ -16,7 +16,7 @@ const LoginForm = () => {
       const response =await axios.post('http://localhost:4000/login',{
         email,
         password
-      });
+      }, {withCredentials: true});
       console.log('login successful', response.data);
 
       sessionStorage.setItem('accessToken', response.data.accessToken);

@@ -89,7 +89,7 @@ export default function Homepage() {
                 boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.3)",
               }}
             >
-              Create Your Blog
+             <a href="/createblog">Create Your Blog</a>
             </Button>
           </Box>
         </Box>
