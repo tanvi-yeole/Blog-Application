@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { styled } from "@mui/material/styles";
 import {
   Box,
@@ -10,6 +11,7 @@ import {
 } from "@mui/material";
 import BlogCard from "../components/Card";
 import Stack from "@mui/material/Stack";
+import { Link } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -37,10 +39,23 @@ const ExpandMore = styled((props) => {
 
 export default function Homepage() {
   const [expanded, setExpanded] = React.useState(false);
+  const [posts, setPosts] = React.useState([]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/getPosts");
+        setPosts(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   return (
     <div>
@@ -89,7 +104,7 @@ export default function Homepage() {
                 boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.3)",
               }}
             >
-             <a href="/createblog">Create Your Blog</a>
+              <a href="/createblog">Create Your Blog</a>
             </Button>
           </Box>
         </Box>
@@ -109,9 +124,17 @@ export default function Homepage() {
           direction={"row"}
           sx={{ flexWrap: "wrap", justifyContent: "space-between" }}
         >
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
+          {posts.map((post) => (
+            <Link to={`/blog/${post._id}`} key={post._id}>
+              <BlogCard
+                title={post.title}
+                content={post.content}
+                cover={post.cover}
+                name={post.name}
+                date={post.createdAt}
+              />
+            </Link>
+          ))}
         </Stack>
       </Container>
     </div>

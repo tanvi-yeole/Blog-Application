@@ -6,6 +6,7 @@ import Signin from "./Pages/Signin";
 import { Routes, Route } from "react-router-dom";
 import Createblog from "./Pages/createBlog";
 import { useState } from "react";
+import BlogPost from "./Pages/Blog";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/login" element={<Signin />} />
         <Route path="/register" element={<Register />} />
         <Route path="/createblog" element={<Createblog />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Editor from "../components/Editor";
+// import Editor from "../components/Editor";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -72,7 +72,16 @@ const Createblog = () => {
             onChange={(e) => setFiles(e.target.files[0])}
           />
 
-          <Editor value={content} onChange={setContent} />
+          {/* <Editor value={content} onChange={setContent} /> */}
+
+          <TextField
+            id="content"
+            label="Content"
+            multiline
+            rows={4}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
 
           <br />
 

@@ -14,6 +14,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { formatISO9075 } from "date-fns";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -39,7 +40,7 @@ const ExpandMore = styled((props) => {
   ],
 }));
 
-export default function BlogCard() {
+export default function BlogCard({ title, content, cover, name, date }) {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -59,20 +60,18 @@ export default function BlogCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={title}
+        subheader={date ? formatISO9075(new Date(date)) : "none"}
       />
       <CardMedia
         component="img"
         height="194"
-        image="img/bloog.jpg"
+        image={`http://localhost:4000/${cover}`}
         alt="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+        <span dangerouslySetInnerHTML={{ __html: content }}></span>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -91,29 +90,6 @@ export default function BlogCard() {
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-            over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-            stirring occasionally until lightly browned, 6 to 8 minutes.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is
-            absorbed, 15 to 18 minutes.
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then
-            serve.
-          </Typography>
-        </CardContent>
-      </Collapse>
     </Card>
   );
 }
