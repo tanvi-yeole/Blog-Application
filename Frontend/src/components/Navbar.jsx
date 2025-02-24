@@ -32,7 +32,7 @@ function PrimarySearchAppBar() {
   const Logout = async () => {
     try {
       await axios.post(
-        "https://blogger-lxs5.onrender.com//logout",
+        "https://blogger-lxs5.onrender.com/logout",
         {},
         { withCredentials: true }
       );

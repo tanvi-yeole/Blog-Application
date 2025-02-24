@@ -26,7 +26,7 @@ const RegisterForm = () => {
     }
     try {
       const response = await axios.post(
-        "https://blogger-lxs5.onrender.com//signup",
+        "https://blogger-lxs5.onrender.com/signup",
         {
           name,
           email,

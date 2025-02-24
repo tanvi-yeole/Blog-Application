@@ -12,7 +12,7 @@ const BlogPost = () => {
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
-    axios.get(`https://blogger-lxs5.onrender.com//getPost/${id}`)
+    axios.get(`https://blogger-lxs5.onrender.com/getPost/${id}`)
       .then(res => {
         console.log(res.data);
         setPosts(res.data);
@@ -27,7 +27,7 @@ const BlogPost = () => {
     setLiked(!liked);
     setLikes(liked ? likes - 1 : likes + 1);
     // Optionally, send a request to the backend to update the like count
-    // axios.post(`https://blogger-lxs5.onrender.com//likePost/${id}`, { liked: !liked });
+    // axios.post(`https://blogger-lxs5.onrender.com/likePost/${id}`, { liked: !liked });
   };
 
   if (!posts.data) {
@@ -55,7 +55,7 @@ const BlogPost = () => {
         </Typography>
         <Divider sx={{ my: 2 }} />
         <Box display="flex" justifyContent="center" my={2}>
-          <img src={`https://blogger-lxs5.onrender.com//${posts.data.cover}`} alt="Banner" style={{ maxWidth: '100%', borderRadius: 8 }} />
+          <img src={`https://blogger-lxs5.onrender.com/${posts.data.cover}`} alt="Banner" style={{ maxWidth: '100%', borderRadius: 8 }} />
         </Box>
         <Typography variant="body1" component="div" dangerouslySetInnerHTML={{ __html: posts.data.content }} sx={{ mt: 3, lineHeight: 1.7 }} />
         <Box display="flex" alignItems="center" justifyContent="center" my={2}>

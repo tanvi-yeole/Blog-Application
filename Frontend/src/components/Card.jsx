@@ -66,7 +66,7 @@ export default function BlogCard({ title, content, cover, name, date }) {
       <CardMedia
         component="img"
         height="194"
-        image={`https://blogger-lxs5.onrender.com//${cover}`}
+        image={`https://blogger-lxs5.onrender.com/${cover}`}
         alt="Paella dish"
       />
       <CardContent>

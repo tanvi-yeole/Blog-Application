@@ -13,7 +13,7 @@ const LoginForm = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try{
-      const response =await axios.post('https://blogger-lxs5.onrender.com//login',{
+      const response =await axios.post('https://blogger-lxs5.onrender.com/login',{
         email,
         password
       }, {withCredentials: true});
