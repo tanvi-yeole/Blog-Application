@@ -1,47 +1,55 @@
-import React,{useState} from "react";
-import { TextField, Button, Box, Typography, Container, Grid } from "@mui/material";
+import React, { useState } from "react";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Container,
+  Grid,
+} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
-  const[username,setUsername] = useState('');
-  const[email,setEmail] = useState('');
-  const[password,setPassword] = useState('');
-  const[confirmPassword, setConfirmPassword] = useState('');
-  const[error,setError] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(password !== confirmPassword){
-      setError('Passwords do not match');
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
       return;
     }
-    try{
-      const response = await axios.post('http://localhost:4000/signup',{
-        name:username,
-        email,
-        password,
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
+    try {
+      const response = await axios.post(
+        "https://blogger-lxs5.onrender.com//signup",
+        {
+          name,
+          email,
+          password,
         },
-        withCredentials: true
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
       console.log("Form submitted", response.data);
-      if(response.status==200){
-        navigate('/login');
-      }else{
-        setError('Registration Failed')
+      if (response.status == 200) {
+        navigate("/login");
+      } else {
+        setError("Registration Failed");
       }
-      
-
-    }catch(err){
-      console.error('Registration error', err.response?.data);
-      setError(err.response?.data?.msg || 'Registration Failed')
+    } catch (err) {
+      console.error("Registration error", err.response?.data);
+      setError(err.response?.data?.msg || "Registration Failed");
     }
     // Add form submission logic here
-   
   };
 
   return (
@@ -53,7 +61,7 @@ const RegisterForm = () => {
           borderRadius: 3,
           backgroundColor: "linear-gradient(to bottom, #ffffff, #f0f4f8)",
           transition: "transform 0.3s ease",
-          '&:hover': {
+          "&:hover": {
             transform: "scale(1.02)",
             boxShadow: 8,
           },
@@ -83,16 +91,16 @@ const RegisterForm = () => {
                 variant="outlined"
                 margin="normal"
                 required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
-                  '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
                       borderColor: "#ccc",
                     },
-                    '&:hover fieldset': {
+                    "&:hover fieldset": {
                       borderColor: "#007bff",
                     },
                   },
@@ -108,15 +116,15 @@ const RegisterForm = () => {
                 margin="normal"
                 required
                 value={email}
-                onChange={(e)=> setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
-                  '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
                       borderColor: "#ccc",
                     },
-                    '&:hover fieldset': {
+                    "&:hover fieldset": {
                       borderColor: "#007bff",
                     },
                   },
@@ -132,16 +140,15 @@ const RegisterForm = () => {
                 margin="normal"
                 required
                 value={password}
-                onChange={(e)=>setPassword(e.target.value)
-                }
+                onChange={(e) => setPassword(e.target.value)}
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
-                  '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
                       borderColor: "#ccc",
                     },
-                    '&:hover fieldset': {
+                    "&:hover fieldset": {
                       borderColor: "#007bff",
                     },
                   },
@@ -156,16 +163,16 @@ const RegisterForm = () => {
                 variant="outlined"
                 margin="normal"
                 required
-                value={confirmPassword} 
-                onChange={(e)=>setConfirmPassword(e.target.value)}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: 1,
-                  '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
                       borderColor: "#ccc",
                     },
-                    '&:hover fieldset': {
+                    "&:hover fieldset": {
                       borderColor: "#007bff",
                     },
                   },
@@ -174,7 +181,7 @@ const RegisterForm = () => {
             </Grid>
           </Grid>
           <a href="/login">Login Here</a>
-          {error && <Typography color='error'>{error}</Typography>}
+          {error && <Typography color="error">{error}</Typography>}
           <Button
             type="submit"
             fullWidth
@@ -188,7 +195,7 @@ const RegisterForm = () => {
               borderRadius: 2,
               textTransform: "none",
               backgroundColor: "#007bff",
-              '&:hover': {
+              "&:hover": {
                 backgroundColor: "#0056b3",
               },
             }}

@@ -40,7 +40,7 @@ const Createblog = () => {
 
     setLoading(true);
     await axios
-      .post("http://localhost:4000/createPost", formData, {
+      .post("https://blogger-lxs5.onrender.com//createPost", formData, {
         withCredentials: true,
       })
       .then((res) => {

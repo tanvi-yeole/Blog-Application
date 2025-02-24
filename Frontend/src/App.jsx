@@ -4,7 +4,7 @@ import Homepage from "./Pages/Homepage";
 import Register from "./Pages/Register";
 import Signin from "./Pages/Signin";
 import { Routes, Route } from "react-router-dom";
-import Createblog from "./Pages/createBlog";
+import Createblog from "./Pages/Createblog";
 import { useState } from "react";
 import BlogPost from "./Pages/Blog";
 

@@ -48,7 +48,7 @@ export default function Homepage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/getPosts");
+        const response = await axios.get("https://blogger-lxs5.onrender.com//getPosts");
         setPosts(response.data.data);
       } catch (error) {
         console.error(error);

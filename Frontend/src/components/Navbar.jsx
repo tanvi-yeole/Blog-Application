@@ -29,12 +29,14 @@ function PrimarySearchAppBar() {
     }
   }, [Token]);
 
-  const Logout = () => {
+  const Logout = async () => {
     try {
-      sessionStorage.removeItem("accessToken");
-      sessionStorage.removeItem("refreshToken");
+      await axios.post(
+        "https://blogger-lxs5.onrender.com//logout",
+        {},
+        { withCredentials: true }
+      );
       setUserAuthenticated(false);
-
     } catch (err) {
       console.error(err);
     }
@@ -124,7 +126,7 @@ function PrimarySearchAppBar() {
             <Button
               color="primary"
               style={{ backgroundColor: "#0b0b0b", color: "#ffffff" }}
-              onClick = {Logout}
+              onClick={Logout}
             >
               <a href="/login">LogOut</a>
             </Button>

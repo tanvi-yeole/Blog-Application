@@ -13,14 +13,13 @@ const LoginForm = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try{
-      const response =await axios.post('http://localhost:4000/login',{
+      const response =await axios.post('https://blogger-lxs5.onrender.com//login',{
         email,
         password
       }, {withCredentials: true});
       console.log('login successful', response.data);
 
-      sessionStorage.setItem('accessToken', response.data.accessToken);
-      sessionStorage.setItem('refreshToken', response.data.refreshToken);
+      localStorage.setItem('accessToken', response.data.accessToken);
       navigate('/');
     }catch(err){
       setError(err.response?.data?.msg || 'Login failed')
