@@ -48,7 +48,7 @@ export default function Homepage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("https://blogger-lxs5.onrender.com/getPosts");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/getPosts`);
         setPosts(response.data.data);
       } catch (error) {
         console.error(error);

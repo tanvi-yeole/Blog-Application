@@ -44,7 +44,7 @@ export const signupUser = async (request, response) => {
 };
 
 export const loginUser = async (request, response) => {
-  let user = await User.findOne({ username: request.body.username });
+  let user = await User.findOne({ email: request.body.email });
   if (!user) {
     return response.status(400).json({ msg: "Username does not match" });
   }
@@ -52,7 +52,7 @@ export const loginUser = async (request, response) => {
     let match = await bcrypt.compare(request.body.password, user.password);
 
     if (!match) {
-      return res.status(400).json({
+      return response.status(400).json({
         status: 400,
         message: "Invalid credentials",
       });
@@ -70,7 +70,7 @@ export const loginUser = async (request, response) => {
     response.status(200).json({
       accessToken: token,
       name: user.name,
-      username: user.username,
+      email: user.email,
     });
   } catch (error) {
     return response.json({

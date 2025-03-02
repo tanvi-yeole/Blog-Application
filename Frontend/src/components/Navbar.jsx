@@ -22,7 +22,7 @@ function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [isUserAuthenticated, setUserAuthenticated] = React.useState(false);
-  const Token = sessionStorage.getItem("accessToken");
+  const Token = localStorage.getItem("accessToken");
   useEffect(() => {
     if (Token) {
       setUserAuthenticated(true);
@@ -31,11 +31,12 @@ function PrimarySearchAppBar() {
 
   const Logout = async () => {
     try {
+      localStorage.removeItem("accessToken");
       await axios.post(
-        "https://blogger-lxs5.onrender.com/logout",
+        `${import.meta.env.VITE_API_URL}/logout"`,
         {},
         { withCredentials: true }
-      );
+      )
       setUserAuthenticated(false);
     } catch (err) {
       console.error(err);

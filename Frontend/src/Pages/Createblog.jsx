@@ -40,7 +40,7 @@ const Createblog = () => {
 
     setLoading(true);
     await axios
-      .post("https://blogger-lxs5.onrender.com/createPost", formData, {
+      .post(`${import.meta.env.VITE_API_URL}/createPost`, formData, {
         withCredentials: true,
       })
       .then((res) => {

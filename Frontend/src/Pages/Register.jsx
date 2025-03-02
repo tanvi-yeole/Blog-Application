@@ -26,7 +26,7 @@ const RegisterForm = () => {
     }
     try {
       const response = await axios.post(
-        "https://blogger-lxs5.onrender.com/signup",
+        `${import.meta.env.VITE_API_URL}/signup`,
         {
           name,
           email,

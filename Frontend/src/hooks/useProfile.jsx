@@ -14,7 +14,7 @@ export default async function useProfile() {
       setisLogin(true);
     }
     axios
-      .get("https://blogger-lxs5.onrender.com/profile", {
+      .get(`${import.meta.env.VITE_API_URL}/profile`, {
         withCredentials: true,
       })
       .then((res) => {
