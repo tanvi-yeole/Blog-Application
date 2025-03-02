@@ -129,7 +129,7 @@ function PrimarySearchAppBar() {
               style={{ backgroundColor: "#0b0b0b", color: "#ffffff" }}
               onClick={Logout}
             >
-              <a href="/login">LogOut</a>
+              <Link to="/login">LogOut</Link>
             </Button>
           )}
           {!isUserAuthenticated && (
@@ -137,7 +137,7 @@ function PrimarySearchAppBar() {
               color="primary"
               style={{ backgroundColor: "#0b0b0b", color: "#ffffff" }}
             >
-              <a href="/login">Get Started</a>
+              <Link to="/login">Get Started</Link>
             </Button>
           )}
         </Toolbar>
