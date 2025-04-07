@@ -9,12 +9,12 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { formatISO9075 } from "date-fns";
+import { truncateText } from "../utils/lib";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -47,12 +47,15 @@ export default function BlogCard({ title, content, cover, name, date }) {
     setExpanded(!expanded);
   };
 
+  const truncatedContent = truncateText(content, 10);
+  const trucatedTitle = truncateText(title, 6);
+
   return (
     <Card sx={{ maxWidth: 345 }} style={{ marginBottom: "0.75rem" }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+          <Avatar sx={{ bgcolor: '#000000' }} aria-label="recipe">
+            {name}
           </Avatar>
         }
         action={
@@ -60,18 +63,18 @@ export default function BlogCard({ title, content, cover, name, date }) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={title}
+        title={trucatedTitle}
         subheader={date ? formatISO9075(new Date(date)) : "none"}
       />
       <CardMedia
         component="img"
-        height="194"
         image={`${import.meta.env.VITE_API_URL}/${cover}`}
         alt="Paella dish"
+        sx={{ objectFit: "cover", aspectRatio: "16/9" }}
       />
       <CardContent>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-        <span dangerouslySetInnerHTML={{ __html: content }}></span>
+          <span dangerouslySetInnerHTML={{ __html: truncatedContent }}></span>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

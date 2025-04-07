@@ -8,7 +8,7 @@ import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { Stack, Container } from "@mui/material";
+import { Stack, Container, Typography } from "@mui/material";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -53,24 +53,52 @@ const Createblog = () => {
         setLoading(false);
       });
   };
+  if (redirect) {
+    return <Navigate to="/" />;
+  }
 
   return (
-    <Stack spacing={3}>
-      <Container>
-        <form action="">
+    <Container>
+      <Typography variant="h5" sx={{ mt: 3 }}>
+        Create your Blog
+      </Typography>
+      <form action="">
+        <Stack
+          spacing={3}
+          direction={"column"}
+          sx={{ mt: 5 }}
+          alignItems={"center"}
+        >
           <TextField
             id="title"
             label="Title"
             variant="outlined"
             value={title}
+            fullWidth
             onChange={(e) => setTitle(e.target.value)}
           />
 
-          <input
+          {/* <input
             type="file"
             label="Cover Image"
             onChange={(e) => setFiles(e.target.files[0])}
-          />
+          /> */}
+
+          <Button
+            component="label"
+            role={undefined}
+            variant="outlined"
+            tabIndex={-1}
+            fullWidth
+          >
+            Upload files
+            <VisuallyHiddenInput
+              label="Cover Image"
+              type="file"
+              onChange={(e) => setFiles(e.target.files[0])}
+              multiple
+            />
+          </Button>
 
           {/* <Editor value={content} onChange={setContent} /> */}
 
@@ -80,22 +108,24 @@ const Createblog = () => {
             multiline
             rows={4}
             value={content}
+            fullWidth
             onChange={(e) => setContent(e.target.value)}
           />
 
           <br />
 
           <Button
-            variant="primary"
+            variant="contained"
             onClick={handleFormSubmit}
             disabled={loading}
             type="submit"
+            fullWidth
           >
             Submit
           </Button>
-        </form>
-      </Container>
-    </Stack>
+        </Stack>
+      </form>
+    </Container>
   );
 };
 
