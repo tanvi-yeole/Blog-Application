@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: ["https://blog-application-dun-mu.vercel.app", "http://localhost:5173"],
+  origin: ["http://localhost:3000", "https://blogger-rho-gilt.vercel.app/"],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
